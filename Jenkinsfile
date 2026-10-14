@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Using e-commerce project source code'
+                echo 'Source code checked out from GitHub'
             }
         }
 
@@ -16,7 +16,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t ecommerce:jenkins .'
+                sh 'docker build -t ecommerce:latest .'
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
                     docker run -d \
                       --name ecommerce-app \
                       -p 8080:8080 \
-                      ecommerce:jenkins
+                      ecommerce:latest
                 '''
             }
         }
@@ -49,10 +49,10 @@ pipeline {
 
     post {
         success {
-            echo 'E-commerce deployment successful!'
+            echo 'Deployment successful!'
         }
         failure {
-            echo 'Pipeline failed. Check console output.'
+            echo 'Deployment failed. Check console output.'
         }
     }
 }
